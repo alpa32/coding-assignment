@@ -13,8 +13,7 @@ import './app.scss'
 
 const App = () => {
 
-  const state = useSelector((state) => state)
-  const { movies } = state  
+  const { movies, currentPage, totalPages, fetchStatus , error} = useSelector((state) => state.movies); 
   const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams.get('search')
@@ -79,7 +78,14 @@ const App = () => {
 
       <div className="container">
         <Routes>
-          <Route path="/" element={<Movies movies={movies} viewTrailer={viewTrailer} />} />
+        <Route path="/" element={<Movies movies={movies} viewTrailer={viewTrailer}
+          fetchStatus={fetchStatus}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          searchQuery={searchQuery}
+          dispatch={dispatch}
+          />} 
+          />
           <Route path="/starred" element={<Starred viewTrailer={viewTrailer} />} />
           <Route path="/watch-later" element={<WatchLater viewTrailer={viewTrailer} />} />
           <Route path="*" element={<h1 className="not-found">Page Not Found</h1>} />
